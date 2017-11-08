@@ -513,7 +513,7 @@ QUnit.test('adds video-js class name with the video-js embed', function(assert) 
   const player2 = videojs(tag2, { techOrder: ['techFaker'] });
 
   for (let i = 0; i < 10; i++) {
-    TestHelpers.makePlayer();
+    TestHelpers.makePlayer({}, vid);
   }
 
   assert.ok(player.hasClass('video-js'), 'video-js class was added to the first embed');
