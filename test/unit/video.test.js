@@ -520,10 +520,12 @@ QUnit.test('should return a video player instance', function(assert) {
 // });
 
 QUnit.test('make a bunch of players and dipose them', function(assert) {
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 100; i++) {
     const tag = TestHelpers.makeTag();
     const player = TestHelpers.makePlayer({techOrder: ['techFaker']}, tag);
 
     player.dispose();
   }
+
+  assert.ok(true, 'foo');
 });
