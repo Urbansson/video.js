@@ -523,6 +523,7 @@ QUnit.test('make a bunch of players and dipose them', function(assert) {
   for (let i = 0; i < 1000; i++) {
     const tag = TestHelpers.makeTag();
     const player = TestHelpers.makePlayer({techOrder: ['techFaker']}, tag);
+
     player.dispose();
   }
 });
