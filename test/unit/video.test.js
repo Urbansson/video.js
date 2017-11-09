@@ -4,6 +4,7 @@ import * as Dom from '../../src/js/utils/dom.js';
 import log from '../../src/js/utils/log.js';
 import document from 'global/document';
 import sinon from 'sinon';
+import TestHelpers from './test-helpers.js';
 
 QUnit.module('video.js', {
   beforeEach() {
@@ -390,10 +391,11 @@ QUnit.test('should return a video player instance', function(assert) {
   assert.ok(videojs.getPlayers().test_vid_id === player,
            'added player to global reference');
 
-  // const playerAgain = videojs('test_vid_id');
+  const playerAgain = videojs('test_vid_id');
 
-  // assert.ok(player === playerAgain, 'did not create a second player from same tag');
-  // assert.equal(player, playerAgain, 'we did not make a new player');
+  assert.ok(player === playerAgain, 'did not create a second player from same tag');
+
+  assert.equal(player, playerAgain, 'we did not make a new player');
 
   const tag2 = document.getElementById('test_vid_id2');
   const player2 = videojs(tag2, { techOrder: ['techFaker'] });
@@ -498,21 +500,29 @@ QUnit.test('should return a video player instance', function(assert) {
 //   player.dispose();
 //   player2.dispose();
 // });
+//
+// QUnit.test('adds video-js class name with the video-js embed', function(assert) {
+//   const fixture = document.getElementById('qunit-fixture');
+//
+//   fixture.innerHTML += '<video-js id="test_vid_id"></video-js>' +
+//                        '<video-js class="video-js" id="test_vid_id2"></video-js>';
+//
+//   const vid = document.querySelector('#test_vid_id');
+//   const player = videojs(vid, {techOrder: ['techFaker']});
+//   const tag2 = document.getElementById('test_vid_id2');
+//   const player2 = videojs(tag2, { techOrder: ['techFaker'] });
+//
+//   assert.ok(player.hasClass('video-js'), 'video-js class was added to the first embed');
+//   assert.ok(player2.hasClass('video-js'), 'video-js class was preserved to the second embed');
+//
+//   player.dispose();
+//   player2.dispose();
+// });
 
-QUnit.test('adds video-js class name with the video-js embed', function(assert) {
-  const fixture = document.getElementById('qunit-fixture');
-
-  fixture.innerHTML += '<video-js id="test_vid_id"></video-js>' +
-                       '<video-js class="video-js" id="test_vid_id2"></video-js>';
-
-  const vid = document.querySelector('#test_vid_id');
-  const player = videojs(vid, {techOrder: ['techFaker']});
-  const tag2 = document.getElementById('test_vid_id2');
-  const player2 = videojs(tag2, { techOrder: ['techFaker'] });
-
-  assert.ok(player.hasClass('video-js'), 'video-js class was added to the first embed');
-  assert.ok(player2.hasClass('video-js'), 'video-js class was preserved to the second embed');
-
-  player.dispose();
-  player2.dispose();
+QUnit.test('make a bunch of players and dipose them', function(assert) {
+  for (let i = 0; i < 1000; i++) {
+    const tag = TestHelpers.makeTag();
+    const player = TestHelpers.makePlayer({techOrder: ['techFaker']}, tag);
+    player.dispose();
+  }
 });
