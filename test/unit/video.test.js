@@ -4,7 +4,6 @@ import * as Dom from '../../src/js/utils/dom.js';
 import log from '../../src/js/utils/log.js';
 import document from 'global/document';
 import sinon from 'sinon';
-import TestHelpers from './test-helpers.js';
 
 QUnit.module('video.js', {
   beforeEach() {
@@ -510,10 +509,6 @@ QUnit.test('adds video-js class name with the video-js embed', function(assert) 
   const player = videojs(vid, {techOrder: ['techFaker']});
   const tag2 = document.getElementById('test_vid_id2');
   const player2 = videojs(tag2, { techOrder: ['techFaker'] });
-
-  for (let i = 0; i < 10; i++) {
-    TestHelpers.makePlayer({}, vid);
-  }
 
   assert.ok(player.hasClass('video-js'), 'video-js class was added to the first embed');
   assert.ok(player2.hasClass('video-js'), 'video-js class was preserved to the second embed');
